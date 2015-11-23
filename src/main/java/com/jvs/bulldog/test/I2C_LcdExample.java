@@ -20,12 +20,8 @@ public class I2C_LcdExample {
         // Get your platform
         final Board board = Platform.createBoard();
 
-        I2cBus bus = board.getI2cBus(BBBNames.I2C_1);
-
-        I2cConnection busConn = bus.createI2cConnection(0x20);
-        log.debug("busConn: " + busConn.toString());
-        //log.debug(busConn.readByte());
-        I2CLcd lcd = new I2CLcd(busConn);
+        I2cBus i2cbus = board.getI2cBus(BBBNames.I2C_1);
+        I2CLcd lcd = new I2CLcd(i2cbus, 0x20);
 
         // Let's assume we have got a device on address xx
         for (int i = 0; i < 10; i++) {
