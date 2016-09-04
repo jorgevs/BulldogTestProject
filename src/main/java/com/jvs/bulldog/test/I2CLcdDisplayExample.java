@@ -1,11 +1,11 @@
 package com.jvs.bulldog.test;
 
 import io.silverspoon.bulldog.beagleboneblack.BBBNames;
+import io.silverspoon.bulldog.core.io.bus.i2c.I2cBus;
 import io.silverspoon.bulldog.core.platform.Board;
 import io.silverspoon.bulldog.core.platform.Platform;
 import io.silverspoon.bulldog.core.util.BulldogUtil;
 import io.silverspoon.bulldog.devices.lcd.*;
-import io.silverspoon.bulldog.linux.io.LinuxI2cBus;
 import org.apache.log4j.Logger;
 
 public class I2CLcdDisplayExample {
@@ -17,7 +17,7 @@ public class I2CLcdDisplayExample {
 
     public static void main(String... args) {
         final Board board = Platform.createBoard();
-        LinuxI2cBus i2cbus = (LinuxI2cBus) board.getI2cBus(BBBNames.I2C_1);
+        I2cBus i2cbus = board.getI2cBus(BBBNames.I2C_1);
 
         try {
             I2CLcdDisplay lcd = new I2CLcdDisplay(LcdMode.Display2x16, LcdFont.Font_5x8, i2cbus, 0x20);
@@ -100,7 +100,7 @@ public class I2CLcdDisplayExample {
 
             // clear LCD
             lcd.clear();
-            Thread.sleep(1000);
+            BulldogUtil.sleepMs(timeSleep);
 
             // write line 1 to LCD
             lcd.write(LCD_ROW_1, "The Pi4J Project");
@@ -112,9 +112,9 @@ public class I2CLcdDisplayExample {
             for(int index = 0; index < 5; index++)
             {
                 lcd.write(LCD_ROW_2, "----------------");
-                Thread.sleep(500);
+                BulldogUtil.sleepMs(500);
                 lcd.write(LCD_ROW_2, "****************");
-                Thread.sleep(500);
+                BulldogUtil.sleepMs(500);
             }
             lcd.write(LCD_ROW_2, "----------------");
 
@@ -123,40 +123,40 @@ public class I2CLcdDisplayExample {
                 lcd.write(LCD_ROW_2, index, ">");
                 if(index > 0)
                     lcd.write(LCD_ROW_2, index - 1, "-");
-                Thread.sleep(300);
+                BulldogUtil.sleepMs(300);
             }
             for(int index = lcd.getColumnsCount()-1; index >= 0 ; index--) {
                 lcd.write(LCD_ROW_2, index, "<");
                 if(index < lcd.getColumnsCount()-1)
                     lcd.write(LCD_ROW_2, index + 1, "-");
-                Thread.sleep(300);
+                BulldogUtil.sleepMs(300);
             }
 
             // left alignment, full line data
             lcd.write(LCD_ROW_2, "----------------");
-            Thread.sleep(500);
+            BulldogUtil.sleepMs(500);
             lcd.writeln(LCD_ROW_2, "<< LEFT");
-            Thread.sleep(1000);
+            BulldogUtil.sleepMs(1000);
 
             // right alignment, full line data
             lcd.write(LCD_ROW_2, "----------------");
-            Thread.sleep(500);
+            BulldogUtil.sleepMs(500);
             lcd.writeln(LCD_ROW_2, "RIGHT >>", LCDTextAlignment.ALIGN_RIGHT);
-            Thread.sleep(1000);
+            BulldogUtil.sleepMs(1000);
 
             // center alignment, full line data
             lcd.write(LCD_ROW_2, "----------------");
-            Thread.sleep(500);
+            BulldogUtil.sleepMs(500);
             lcd.writeln(LCD_ROW_2, "<< CENTER >>", LCDTextAlignment.ALIGN_CENTER);
-            Thread.sleep(1000);
+            BulldogUtil.sleepMs(1000);
 
             // mixed alignments, partial line data
             lcd.write(LCD_ROW_2, "----------------");
-            Thread.sleep(500);
+            BulldogUtil.sleepMs(500);
             lcd.write(LCD_ROW_2, "<L>", LCDTextAlignment.ALIGN_LEFT);
             lcd.write(LCD_ROW_2, "<R>", LCDTextAlignment.ALIGN_RIGHT);
             lcd.write(LCD_ROW_2, "CC", LCDTextAlignment.ALIGN_CENTER);
-            Thread.sleep(3000);
+            BulldogUtil.sleepMs(1000);
 
 
             log.debug("FINALIZATION");

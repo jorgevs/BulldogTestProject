@@ -49,7 +49,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.jvs.bulldog.test.I2CLcdDisplayExample</mainClass>
+                            <mainClass>com.jvs.bulldog.test.I2C24XX256Example</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
